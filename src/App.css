@@ -1,38 +1,49 @@
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+    /*display: flex;*/
+    height: 100vh;
+    text-align: center;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  
+  .App-header {
+    background-color: #282c34;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 40%;
+    justify-content: center;
+    font-size: calc(10px + 2vmin);
+    color: white;
   }
-  to {
-    transform: rotate(360deg);
+  .App input {
+    width: 30%;
+    padding: 24px;
+  
+    background: #E6E6E6;
+    border-radius: 5px;
+    border: none;
+  
+    font-size: 16px;
   }
-}
+  
+  .App .buttonTask {
+    width: 10%;
+    padding: 24px;
+    font-weight: 700;
+  
+    background: #a04cea;
+    color: #FFFFFF;
+    
+    border-radius: 5px;
+    margin: 12px 10px 84px;
+    border: none;
+  
+    cursor: pointer;
+    transition: filter 0.2s;
+  
+    font-size: 16px;
+  }
+  .App button:hover {
+    filter: brightness(0.9);
+  }
+  
