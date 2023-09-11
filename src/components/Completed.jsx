@@ -32,6 +32,7 @@ export default function Completed({ completedTasks }) {
       <div key={task.id} style={taskStyle}>
         <p>{task.task}</p>
         <p>{task.time}</p>
+        <p>{task.category}</p>
       </div>
     ))}
   </div>

@@ -1,50 +1,66 @@
-import React from 'react';
+// Em TaskCard.js
 
-export function TaskCard ({ task, time, id,  isCompleted, toggleFavorite, onRemove }){
-  const taskStyle = {
-      'position': 'relative',
-      'left': '33%',
-      'font-size': '12px',
-      'padding-left': '2%',
-      "height": '30px',
-      'width': '30%',    
-      'background': '#735bf2',
-      'color': '#fff',
-      'border-radius': '10px',
-      'margin-bottom': '10px',
-      'display': 'flex',
-      'align-items': 'center',
-      'justify-content': 'space-between',
-      'padding': '24px'
-  }
+import React, { useState } from 'react';
+
+export function TaskCard({ task, toggleFavorite, onRemove, onEdit, onSaveEdit, isEditing, selectedCategory }) {
+  // Novo estado para controlar a edição de texto
+  const [editedText, setEditedText] = useState(task.task);
 
   const handleRemoveClick = () => {
-    onRemove(task); // Chama a função de remoção quando o botão for clicado
+    onRemove(task);
   };
 
   const handleFavoriteClick = () => {
     toggleFavorite(task.id);
-    console.log(task.id);
+  };
+
+  const handleEditClick = () => {
+    onEdit(task.id);
+  };
+
+  const handleSaveEditClick = () => {
+    onSaveEdit(task.id, editedText);
+  };
+
+  const handleCancelEditClick = () => {
+    setEditedText(task.task);
+    onEdit(null); // Encerra a edição
   };
 
   return (
-  <div>
-    {task.task ? (
-      <div className="task-card" style={taskStyle}>
-        <h5>{task.task}</h5>
-        <label onClick={handleRemoveClick}>🗑️</label>
-        <p>{task.time}</p>
-        {!task.isCompleted ? (
-            <span onClick={handleFavoriteClick}>✩</span>
-            ) : (
-            <span onClick={handleFavoriteClick}>🌟</span>
+    <div>
+      {isEditing ? (
+        <div className="edit-task">
+          <input
+            type="text"
+            value={editedText}
+            onChange={(e) => setEditedText(e.target.value)}
+          />
+          <button className="btn btn-light" onClick={handleSaveEditClick}>
+            Save
+          </button>
+          <button className="btn btn-outline" onClick={handleCancelEditClick}>
+            Cancel
+          </button>
+        </div>
+      ) : (
+        <div className="task-card">
+          <h5>{task.task}</h5>
+          <label className='icon' onClick={handleRemoveClick}>🗑️</label>
+          <p>{task.time}</p>
+          {!task.isCompleted ? (
+            <span onClick={handleFavoriteClick} className='icon'>✩</span>
+          ) : (
+            <span onClick={handleFavoriteClick} className='icon'>🌟</span>
           )}
-      </div>
-    ) : (
-      <h3>Inicio</h3>
-    )}
-  </div>
+          <h6>{task.category}</h6>
+          <button type="button" className="btn btn-secondary" onClick={handleEditClick}>
+            Edit
+          </button>
+        </div>
+      )}
+    </div>
   );
-};
+}
 
 export default TaskCard;

@@ -2,6 +2,7 @@
     /*display: flex;*/
     height: 100vh;
     text-align: center;
+    margin: auto
   }
   
   .App-header {
@@ -16,7 +17,7 @@
     color: white;
   }
   .App input {
-    width: 30%;
+    width: 390px;
     padding: 24px;
   
     background: #E6E6E6;
@@ -27,15 +28,15 @@
   }
   
   .App .buttonTask {
-    width: 10%;
-    padding: 24px;
+    width: 100px;
+    padding: 24px 15px;
     font-weight: 700;
   
     background: #a04cea;
     color: #FFFFFF;
     
     border-radius: 5px;
-    margin: 12px 10px 84px;
+    margin: 12px 10px 70px;
     border: none;
   
     cursor: pointer;
@@ -43,7 +44,62 @@
   
     font-size: 16px;
   }
-  .App button:hover {
+  .App .buttonTask:hover {
     filter: brightness(0.9);
   }
+
+  .task-list{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+  }
+
+  .task-card{
+    font-size: 12px;
+    padding-left: 2%;
+    height: 30px;
+    width: 510px;  
+    background: #735bf2;
+    color: #fff;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding: 24px;
+}
+
+.icon{
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.form-select{
+  width: 150px;
+  margin-left: 15px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-task{
+  background-color: #735bf2;
+  height: 60px;
+  width: 550px;
+  display: flex;
   
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 5px;
+}
+
+.edit-task input{
+  height: 20px;
+  width: 350px;
+  padding: 24px;
+  background: #E6E6E6;
+  border-radius: 5px;
+  border: none;
+  font-size: 16px;
+}

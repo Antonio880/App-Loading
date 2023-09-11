@@ -12,16 +12,31 @@ function ListaTarefas() {
   const [loadPage, setLoadPage] = useState(true);
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [editingTask, setEditingTask] = useState(null);
   const location = useLocation();
   const userLocation = location.state;
+  const navigate = useNavigate();
+
+  const startEditingTask = (taskId) => {
+    setEditingTask(taskId);
+  };
+
+  const saveEditedTask = (taskId, editedText) => {
+    setTasks((prevTasks) =>
+      prevTasks.map((task) =>
+        task.id === taskId ? { ...task, task: editedText } : task
+      )
+    );
+    setEditingTask(null);
+  };
+
   useEffect(() => {
     setUser(userLocation);
   }, [userLocation]);
-  const navigate = useNavigate();
-
+  
   useEffect(() => {
-    // Carregue as tarefas do localStorage quando o componente for montado
-    console.log("Executando useEffect");
+    //console.log("Executando useEffect");
     const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
     console.log(tasksFromLocalStorage);
     setTasks(tasksFromLocalStorage);
@@ -45,7 +60,8 @@ function ListaTarefas() {
         id: id,
         task: newTask,
         time: new Date().toLocaleTimeString("pt-BR"),
-        isCompleted: false
+        isCompleted: false,
+        category: selectedCategory
       };
       setTasks([...tasks, newTaskObject]);
       setNewTask('');
@@ -64,7 +80,7 @@ function ListaTarefas() {
 
   return (
     <div className="App">
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
+      <nav className="navbar navbar-nav navbar-expand-lg bg-body-tertiary">
         <div className="container-fluid">
           <Link
             to={'/ListaTarefas'}
@@ -74,17 +90,7 @@ function ListaTarefas() {
           >
             Home
           </Link>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          <button className='navbar-toggler'></button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <button
@@ -112,21 +118,38 @@ function ListaTarefas() {
       <h3>Lista de Tarefas</h3>
       <div>
         {loadPage ? (
-          <div>
-            {tasks.map((task) => (
-              <TaskCard
-                key={task.id}
-                toggleFavorite={toggleFavorite}
-                task={task}
-                isCompleted={task.isCompleted}
-                onRemove={handleRemoveProduct}
-              />
-            ))}
+          <div >
+            <div className='task-list'>
+              {tasks.map((task) => (
+                <TaskCard
+                  key={task.id}
+                  toggleFavorite={toggleFavorite}
+                  task={task}
+                  isCompleted={task.isCompleted}
+                  onRemove={handleRemoveProduct}
+                  onEdit={startEditingTask}
+                  onSaveEdit={saveEditedTask}
+                  isEditing={editingTask === task.id}
+                />
+              ))}
+            </div>
+            
             <input
               type="text"
               value={newTask}
               onChange={(e) => { setNewTask(e.target.value) }}
             />
+            <select   
+              className="form-select form-select-sm" 
+              aria-label="Small select example" 
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+              <option selected>Categories</option>
+              <option value="Work">Work</option>
+              <option value="Studing">Studing</option>
+              <option value="Hobbie">Hobbie</option>
+            </select>
             <button onClick={addTask} className='buttonTask'>Adicionar</button>
           </div>
         ) : (
