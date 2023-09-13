@@ -7,6 +7,17 @@ import { Link } from 'react-router-dom';
 import '../App.css';
 import Completed from '../components/Completed';
 
+import {
+  Collapse,
+  Navbar,
+  NavbarToggler,
+  NavbarBrand,
+  Nav,
+  NavItem,
+  NavLink,
+} from 'reactstrap';
+
+
 function ListaTarefas() {
   const [user, setUser] = useState({});
   const [loadPage, setLoadPage] = useState(true);
@@ -15,8 +26,11 @@ function ListaTarefas() {
   const [selectedCategory, setSelectedCategory] = useState('');
   const [editingTask, setEditingTask] = useState(null);
   const location = useLocation();
+  const [collapsed, setCollapsed] = useState(true);
   const userLocation = location.state;
   const navigate = useNavigate();
+
+  const toggleNavbar = () => setCollapsed(!collapsed);
 
   const startEditingTask = (taskId) => {
     setEditingTask(taskId);
@@ -80,41 +94,65 @@ function ListaTarefas() {
 
   return (
     <div className="App">
-      <nav className="navbar navbar-nav navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
+      <Navbar  color='faded' light>
+        <NavbarBrand className="me-auto">  
           <Link
             to={'/ListaTarefas'}
             className="nav-link"
+            aria-current="page"
             state={user}
             onClick={() => setLoadPage(true)}
-          >
-            Home
-          </Link>
-          <button className='navbar-toggler'></button>
-          <div className="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul className="navbar-nav me-auto mb-2 mb-lg-0">
-              <button
-                onClick={() => setLoadPage(!loadPage)}
-                className="nav-link"
-              >
-                Tasks Completed
-              </button>
-            </ul>
-            <UserDetails username={user.login} avatarUrl={user.avatar_url} />
-          </div>
-        </div>
-      </nav>
-      <button
-        type="button"
-        style={{ position: 'absolute', top: '2%', left: '93%' }}
-        onClick={() => {
-          setUser(null);
-          navigate("/");
-        }}
-        className="btn btn-danger"
-      >
-        Logout
-      </button>
+            >
+              Home
+          </Link>    
+        </NavbarBrand>
+        <NavbarToggler onClick={toggleNavbar} className="me-2" />
+          <Collapse isOpen={!collapsed} navbar>
+            <Nav className="me-auto" navbar>
+            <NavItem>
+                <NavLink >
+                  <Link
+                    to={'/ListaTarefas'}
+                    className="nav-link"
+                    aria-current="page"
+                    state={user}
+                    onClick={() => setLoadPage(true)}
+                    >
+                      Home
+                  </Link>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink >
+                  <Link
+                    aria-current="page"
+                    onClick={() => setLoadPage(!loadPage)}
+                    className="nav-link"
+                    >
+                      Tasks Completed  
+                  </Link>
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  onClick={() => {
+                    setUser(null);
+                    navigate("/");
+                  }}
+                  className="nav-link btn btn-danger"
+                  >
+                  Logout
+                </NavLink>
+              </NavItem>
+            </Nav>
+          </Collapse>
+          
+            {/* <UserDetails username={user.login} avatarUrl={user.avatar_url} />
+            <ul className='navbar-nav me-4 mb-2 mb-lg-0'>
+              
+            </ul> */}
+      </Navbar>
+      
       <h3>Lista de Tarefas</h3>
       <div>
         {loadPage ? (
@@ -133,24 +171,36 @@ function ListaTarefas() {
                 />
               ))}
             </div>
-            
-            <input
-              type="text"
-              value={newTask}
-              onChange={(e) => { setNewTask(e.target.value) }}
-            />
-            <select   
-              className="form-select form-select-sm" 
-              aria-label="Small select example" 
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              >
-              <option selected>Categories</option>
-              <option value="Work">Work</option>
-              <option value="Studing">Studing</option>
-              <option value="Hobbie">Hobbie</option>
-            </select>
-            <button onClick={addTask} className='buttonTask'>Adicionar</button>
+            <div className='container text-center' >
+              <div className='row' style={{display:'flex',justifyContent:'center'}}>
+                <div className='col-md-8'>
+                  <input
+                    type="text"
+                    value={newTask}
+                    onChange={(e) => { setNewTask(e.target.value) }}
+                    
+                  />
+                </div>
+                <div class="col-md-8">
+                  <select 
+                  class="form-select" 
+                  id="inputGroupSelect02"
+                  value={selectedCategory}
+                  onChange={(e) => setSelectedCategory(e.target.value)}
+                  className='form-select'
+                  >
+                    <option selected>Categories</option>
+                    <option value="Work">Work</option>
+                    <option value="Studing">Studing</option>
+                    <option value="Hobbie">Hobbie</option>
+                  </select>
+                  
+                </div> 
+                <div className='col-md-8'>
+                  <button onClick={addTask} className='buttonTask'>Adicionar</button>
+                </div>
+              </div>
+            </div>
           </div>
         ) : (
           <div>
