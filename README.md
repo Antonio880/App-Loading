@@ -1,3 +1,6 @@
+# OBS:
+Importante que não seja usado o navegador Opera, pois o localStorage dele retorna dados não esperados
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
