@@ -27,7 +27,7 @@ function ListaTarefas() {
   const [editingTask, setEditingTask] = useState(null);
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(true);
-  const userLocation = location.state;
+  let userLocation = location.state;
   const navigate = useNavigate();
 
   const toggleNavbar = () => setCollapsed(!collapsed);
@@ -68,7 +68,7 @@ function ListaTarefas() {
   };
   
   const addTask = () => {
-    if (newTask.trim() !== '') {
+    if (newTask.trim() !== '' && selectedCategory.trim() !== '') {
       const id = Date.now(); // Gere um ID único com base no horário atual
       const newTaskObject = {
         id: id,
@@ -100,11 +100,16 @@ function ListaTarefas() {
             to={'/ListaTarefas'}
             className="nav-link"
             aria-current="page"
-            state={user}
+            
             onClick={() => setLoadPage(true)}
             >
               Home
           </Link>    
+        </NavbarBrand>
+        <NavbarBrand>
+          {user?.login && (
+            <UserDetails username={user.login} avatarUrl={user.avatar_url} />
+          )}
         </NavbarBrand>
         <NavbarToggler onClick={toggleNavbar} className="me-2" />
           <Collapse isOpen={!collapsed} navbar>
@@ -115,7 +120,7 @@ function ListaTarefas() {
                     to={'/ListaTarefas'}
                     className="nav-link"
                     aria-current="page"
-                    state={user}
+                    
                     onClick={() => setLoadPage(true)}
                     >
                       Home
@@ -137,6 +142,7 @@ function ListaTarefas() {
                 <NavLink
                   onClick={() => {
                     setUser(null);
+                    userLocation = null;
                     navigate("/");
                   }}
                   className="nav-link btn btn-danger"
@@ -147,7 +153,7 @@ function ListaTarefas() {
             </Nav>
           </Collapse>
           
-            {/* <UserDetails username={user.login} avatarUrl={user.avatar_url} />
+            {/* 
             <ul className='navbar-nav me-4 mb-2 mb-lg-0'>
               
             </ul> */}
@@ -189,7 +195,7 @@ function ListaTarefas() {
                   onChange={(e) => setSelectedCategory(e.target.value)}
                   className='form-select'
                   >
-                    <option selected>Categories</option>
+                    <option selected >Categories</option>
                     <option value="Work">Work</option>
                     <option value="Studing">Studing</option>
                     <option value="Hobbie">Hobbie</option>

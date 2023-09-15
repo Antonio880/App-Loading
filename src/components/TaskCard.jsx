@@ -45,7 +45,7 @@ export function TaskCard({ task, toggleFavorite, onRemove, onEdit, onSaveEdit, i
         </div>
       ) : (
         <div className="task-card">
-          <h5>{task.task}</h5>
+          <h5 style={{overflowX:"auto", overflowY: 'hidden', marginRight: "6px"}}>{task.task}</h5>
           <label className='icon' onClick={handleRemoveClick}>🗑️</label>
           <p>{task.time}</p>
           {!task.isCompleted ? (
