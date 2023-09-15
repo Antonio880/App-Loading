@@ -164,18 +164,24 @@ function ListaTarefas() {
         {loadPage ? (
           <div >
             <div className='task-list'>
-              {tasks.map((task) => (
-                <TaskCard
-                  key={task.id}
-                  toggleFavorite={toggleFavorite}
-                  task={task}
-                  isCompleted={task.isCompleted}
-                  onRemove={handleRemoveProduct}
-                  onEdit={startEditingTask}
-                  onSaveEdit={saveEditedTask}
-                  isEditing={editingTask === task.id}
-                />
-              ))}
+              {tasks ? (
+                tasks.map((task) => (
+                  <TaskCard
+                    key={task.id}
+                    toggleFavorite={toggleFavorite}
+                    task={task}
+                    isCompleted={task.isCompleted}
+                    onRemove={handleRemoveProduct}
+                    onEdit={startEditingTask}
+                    onSaveEdit={saveEditedTask}
+                    isEditing={editingTask === task.id}
+                  />
+                ))
+              ):(
+                <div>
+                  Teste
+                </div>
+              )}
             </div>
             <div className='container text-center' >
               <div className='row' style={{display:'flex',justifyContent:'center'}}>
