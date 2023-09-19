@@ -5,20 +5,20 @@ export function UserDetails({ username, avatarUrl }){
   
   const style = {
     "display": "inline",
-    "margin-right": "20px",
+    "margin-right": "18px",
   }
 
   const photo = {
     "display": "inline",
-    "height": '8%',
-    "width": '8%',
-    "border-radius": '15px',
+    "height": '33px',
+    "width": '33px',
+    "border-radius": '12px',
   }
 
   return (
     <div style={style}>
       <p style={style}>{username}</p>
-      <img src={avatarUrl} alt="Avatar do usuário" style={photo}/>
+      <img src={avatarUrl}  alt="Avatar do usuário" style={photo}/>
     </div>
   );
 };

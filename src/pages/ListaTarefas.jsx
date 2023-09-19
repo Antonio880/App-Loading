@@ -52,9 +52,15 @@ function ListaTarefas() {
   useEffect(() => {
     //console.log("Executando useEffect");
     const tasksFromLocalStorage = JSON.parse(localStorage.getItem('tasks'));
-    console.log(tasksFromLocalStorage);
-    setTasks(tasksFromLocalStorage);
-    
+    if(tasksFromLocalStorage){
+      setTasks(tasksFromLocalStorage);
+    }else{
+      setTasks([
+        {
+          id:0
+        }
+      ])
+    }
   }, []);
 
   useEffect(() => {
@@ -106,7 +112,7 @@ function ListaTarefas() {
               Home
           </Link>    
         </NavbarBrand>
-        <NavbarBrand>
+        <NavbarBrand className="me-auto" id='Details'>
           {user?.login && (
             <UserDetails username={user.login} avatarUrl={user.avatar_url} />
           )}
@@ -164,7 +170,7 @@ function ListaTarefas() {
         {loadPage ? (
           <div >
             <div className='task-list'>
-              {tasks ? (
+              {tasks && (
                 tasks.map((task) => (
                   <TaskCard
                     key={task.id}
@@ -177,10 +183,6 @@ function ListaTarefas() {
                     isEditing={editingTask === task.id}
                   />
                 ))
-              ):(
-                <div>
-                  Teste
-                </div>
               )}
             </div>
             <div className='container text-center' >

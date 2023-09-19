@@ -111,13 +111,16 @@
 @media (max-width: 540px) {
   .task-card{
     width: 400px;
-    font-size: 8px;
+    font-size: 14px;
   }
   .edit-task{
-    width: 420px;
+    width: 400px;
     font-size: 8px;
   }
   .edit-task input{
     width: 240px;
+  }
+  #Details{
+    width: 270px;
   }
 }

@@ -1,16 +1,10 @@
 import React from "react";
-import TaskCard from "./TaskCard";
 
 export default function Completed({ completedTasks }) {
-  // const removeFromCompleted = (taskId) => {
-  //   setTasksCompleted((prevFavorites) =>
-  //     prevFavorites.filter((task) => task.id !== taskId)
-  //   );
-  // };
 
   return (
     <div className="task-list">
-    <h3>Tarefas Completas</h3>
+    <h5>Tarefas Completas</h5>
     {completedTasks.map((task) => (
       <div key={task.id} className="task-card">
         <p>{task.task}</p>
